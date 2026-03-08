@@ -303,8 +303,11 @@
         .name-silver { background: linear-gradient(90deg, #757575, #e0e0e0, #8d8d8d, #e0e0e0, #757575); background-size: 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: flowText 4s ease-in-out infinite; }
         .name-bronze { background: linear-gradient(90deg, #804a00, #cd7f32, #b08d57, #cd7f32, #804a00); background-size: 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: flowText 4s ease-in-out infinite; }
 
-        .loading { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 20px; color: var(--text-muted); gap: 16px; animation: fadeSlideIn 0.4s ease both; }
+        .loading { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 20px; color: var(--text-muted); gap: 16px; }
         .spinner { width: 32px; height: 32px; border: 3px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; box-shadow: 0 0 16px rgba(168,85,247,0.4); }
+        @keyframes skelShimmer { 0% { background-position: -600px 0; } 100% { background-position: 600px 0; } }
+        .skel-row { display: grid; grid-template-columns: 60px 1fr 100px 1fr; align-items: center; padding: 12px 16px; border-radius: 10px; margin-bottom: 6px; background: var(--bg2); border: 1px solid var(--border); gap: 12px; }
+        .skel { border-radius: 6px; background: linear-gradient(90deg, var(--bg3) 25%, #2a1f3d 50%, var(--bg3) 75%); background-size: 600px 100%; animation: skelShimmer 1.4s infinite linear; }
         .empty { text-align: center; padding: 60px 20px; color: var(--text-muted); font-size: 14px; font-weight: 600; }
         .title-text { font-size: 11px; font-weight: 600; }
 
@@ -320,10 +323,7 @@
 
 <nav>
     <a class="nav-logo" href="#">
-        <span class="nav-logo-wrap">
-            <span class="logo-delta">DELTA</span>
-            <span class="logo-tiers">T &nbsp; I &nbsp; E &nbsp; R &nbsp; S</span>
-        </span>
+        <img src="logo.png" alt="Delta Tiers" style="height:80px;width:auto;object-fit:contain;">
     </a>
     <div class="nav-links"></div>
     <div class="nav-right">
@@ -349,7 +349,7 @@
 
 <div class="main">
     <div id="main-content">
-        <div class="loading"><div class="spinner"></div><span>Loading rankings...</span></div>
+        <div id="skeleton-loader"><div class="table-header"><span>#</span><span>PLAYER</span><span>REGION</span><span>TIERS</span></div><div class="skel-row"><div class="skel" style="height:18px;width:28px;"></div><div style="display:flex;align-items:center;gap:12px"><div class="skel" style="height:36px;width:36px;border-radius:8px;flex-shrink:0"></div><div class="skel" style="height:14px;width:60px;"></div></div><div class="skel" style="height:22px;width:40px;border-radius:20px;"></div><div style="display:flex;gap:8px"><div class="skel" style="height:36px;width:36px;border-radius:50%;"></div><div class="skel" style="height:36px;width:36px;border-radius:50%;"></div></div></div><div class="skel-row"><div class="skel" style="height:18px;width:28px;"></div><div style="display:flex;align-items:center;gap:12px"><div class="skel" style="height:36px;width:36px;border-radius:8px;flex-shrink:0"></div><div class="skel" style="height:14px;width:68px;"></div></div><div class="skel" style="height:22px;width:40px;border-radius:20px;"></div><div style="display:flex;gap:8px"><div class="skel" style="height:36px;width:36px;border-radius:50%;"></div><div class="skel" style="height:36px;width:36px;border-radius:50%;"></div></div></div><div class="skel-row"><div class="skel" style="height:18px;width:28px;"></div><div style="display:flex;align-items:center;gap:12px"><div class="skel" style="height:36px;width:36px;border-radius:8px;flex-shrink:0"></div><div class="skel" style="height:14px;width:76px;"></div></div><div class="skel" style="height:22px;width:40px;border-radius:20px;"></div><div style="display:flex;gap:8px"><div class="skel" style="height:36px;width:36px;border-radius:50%;"></div><div class="skel" style="height:36px;width:36px;border-radius:50%;"></div></div></div><div class="skel-row"><div class="skel" style="height:18px;width:28px;"></div><div style="display:flex;align-items:center;gap:12px"><div class="skel" style="height:36px;width:36px;border-radius:8px;flex-shrink:0"></div><div class="skel" style="height:14px;width:84px;"></div></div><div class="skel" style="height:22px;width:40px;border-radius:20px;"></div><div style="display:flex;gap:8px"><div class="skel" style="height:36px;width:36px;border-radius:50%;"></div><div class="skel" style="height:36px;width:36px;border-radius:50%;"></div></div></div><div class="skel-row"><div class="skel" style="height:18px;width:28px;"></div><div style="display:flex;align-items:center;gap:12px"><div class="skel" style="height:36px;width:36px;border-radius:8px;flex-shrink:0"></div><div class="skel" style="height:14px;width:92px;"></div></div><div class="skel" style="height:22px;width:40px;border-radius:20px;"></div><div style="display:flex;gap:8px"><div class="skel" style="height:36px;width:36px;border-radius:50%;"></div><div class="skel" style="height:36px;width:36px;border-radius:50%;"></div></div></div><div class="skel-row"><div class="skel" style="height:18px;width:28px;"></div><div style="display:flex;align-items:center;gap:12px"><div class="skel" style="height:36px;width:36px;border-radius:8px;flex-shrink:0"></div><div class="skel" style="height:14px;width:100px;"></div></div><div class="skel" style="height:22px;width:40px;border-radius:20px;"></div><div style="display:flex;gap:8px"><div class="skel" style="height:36px;width:36px;border-radius:50%;"></div><div class="skel" style="height:36px;width:36px;border-radius:50%;"></div></div></div><div class="skel-row"><div class="skel" style="height:18px;width:28px;"></div><div style="display:flex;align-items:center;gap:12px"><div class="skel" style="height:36px;width:36px;border-radius:8px;flex-shrink:0"></div><div class="skel" style="height:14px;width:108px;"></div></div><div class="skel" style="height:22px;width:40px;border-radius:20px;"></div><div style="display:flex;gap:8px"><div class="skel" style="height:36px;width:36px;border-radius:50%;"></div><div class="skel" style="height:36px;width:36px;border-radius:50%;"></div></div></div><div class="skel-row"><div class="skel" style="height:18px;width:28px;"></div><div style="display:flex;align-items:center;gap:12px"><div class="skel" style="height:36px;width:36px;border-radius:8px;flex-shrink:0"></div><div class="skel" style="height:14px;width:116px;"></div></div><div class="skel" style="height:22px;width:40px;border-radius:20px;"></div><div style="display:flex;gap:8px"><div class="skel" style="height:36px;width:36px;border-radius:50%;"></div><div class="skel" style="height:36px;width:36px;border-radius:50%;"></div></div></div></div>
     </div>
 </div>
 
@@ -392,6 +392,7 @@
             return { ...p, totalPoints: score };
         });
         sortedOverall = [...playersData].sort((a,b) => b.totalPoints - a.totalPoints);
+        try { sessionStorage.setItem('dt_cache', JSON.stringify({ t: Date.now(), d: playersData })); } catch(e) {}
         updateView('Overall');
     }
 
@@ -406,7 +407,22 @@
         } catch(e) { tryFetch(urls, idx + 1); }
     }
 
-    async function init() { tryFetch(PROXY_URLS); }
+    async function init() {
+        try {
+            const cached = sessionStorage.getItem('dt_cache');
+            if (cached) {
+                const obj = JSON.parse(cached);
+                if (Date.now() - obj.t < 5 * 60 * 1000) {
+                    playersData = obj.d;
+                    sortedOverall = [...playersData].sort((a,b) => b.totalPoints - a.totalPoints);
+                    updateView('Overall');
+                    tryFetch(PROXY_URLS);
+                    return;
+                }
+            }
+        } catch(e) {}
+        tryFetch(PROXY_URLS);
+    }
 
     function updateView(mode, el) {
         currentMode = mode;
