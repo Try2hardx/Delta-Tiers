@@ -251,8 +251,73 @@
 
         /* TIER VIEW */
         .tier-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
-        @media (max-width: 900px) { .tier-grid { grid-template-columns: repeat(2, 1fr); } .table-header { grid-template-columns: 50px 1fr 70px 1fr; } .player-row { grid-template-columns: 50px 1fr 70px 1fr; } }
-        @media (max-width: 600px) { .tier-grid { grid-template-columns: 1fr; } .table-header { grid-template-columns: 40px 1fr 1fr; } .player-row { grid-template-columns: 40px 1fr 1fr; } .region-cell { display: none; } }
+        /* ── TABLET ── */
+        @media (max-width: 900px) {
+            .tier-grid { grid-template-columns: repeat(2, 1fr); }
+            .table-header { grid-template-columns: 50px 1fr 70px 1fr; }
+            .player-row { grid-template-columns: 50px 1fr 70px 1fr; }
+            .main { padding: 16px; }
+        }
+
+        /* ── MOBILE ── */
+        @media (max-width: 600px) {
+            /* Nav */
+            nav { padding: 0 12px; height: 56px; }
+            .nav-logo img { height: 36px; }
+            .nav-logo { margin-right: 8px; }
+            .nav-search { width: 130px; font-size: 11px; padding: 5px 8px 5px 28px; }
+            .nav-search:focus { width: 155px; }
+            .points-btn { display: none; }
+
+            /* Tabs */
+            .mode-tabs-wrap { padding: 0 8px; }
+            .mode-tab { padding: 8px 12px; font-size: 10px; }
+            .mode-tab img { width: 16px; height: 16px; }
+
+            /* Main */
+            .main { padding: 10px; }
+
+            /* Table */
+            .table-header { grid-template-columns: 36px 1fr 1fr; padding: 6px 10px; font-size: 10px; }
+            .table-header span:nth-child(3) { display: none; }
+            .player-row { grid-template-columns: 36px 1fr 1fr; padding: 8px 10px; margin-bottom: 4px; }
+            .player-row:hover { transform: none; }
+            .region-cell { display: none; }
+
+            /* Player cell */
+            .player-head-3d-wrap { width: 36px; height: 44px; }
+            .player-head-3d { height: 44px; }
+            .player-name { font-size: 12px; }
+            .player-title { font-size: 9px; }
+            .rank-cell { font-size: 13px; }
+
+            /* Tier icons */
+            .tiers-cell { gap: 4px; }
+            .tier-icon-wrap { width: 28px; height: 28px; }
+            .tier-icon-wrap img { width: 13px; height: 13px; }
+            .tier-label { font-size: 7px; }
+
+            /* Tier grid */
+            .tier-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+            .tier-player-head { width: 20px; height: 20px; }
+            .tier-player-name { font-size: 10px; }
+
+            /* Modal */
+            .modal-box { width: calc(100vw - 24px); border-radius: 12px; }
+            .modal-header { padding: 16px 16px 0; padding-bottom: 16px; }
+            .modal-skin { height: 150px; }
+            .modal-name { font-size: 20px; }
+            .modal-body { padding: 14px 16px 18px; }
+            .modal-stats { grid-template-columns: 1fr 1fr; gap: 8px; }
+            .modal-tiers { grid-template-columns: 1fr 1fr; gap: 8px; }
+            .modal-tier-box { padding: 8px; }
+            .stat-value { font-size: 22px; }
+
+            /* Skeleton */
+            .skel-row { grid-template-columns: 36px 1fr 1fr; padding: 8px 10px; }
+            .skel-row > div:nth-child(3) { display: none; }
+            .skel-row > div:nth-child(4) { display: none; }
+        }
         .tier-col-header { padding: 10px 14px; border-radius: 8px 8px 0 0; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; text-align: center; border-bottom: 2px solid; margin-bottom: 8px; }
         .th1 { background: rgba(216,180,254,0.08); color: #f0c040; border-color: #f0c040; }
         .th2 { background: rgba(192,132,252,0.06); color: #c0c0c0; border-color: #c0c0c0; }
@@ -396,32 +461,51 @@
         updateView('Overall');
     }
 
-    async function tryFetch(urls, idx = 0) {
-        if (idx >= urls.length) { document.getElementById('main-content').innerHTML = '<div class="empty">Could not load data.</div>'; return; }
-        try {
-            const res = await fetch(urls[idx]);
-            if (!res.ok) throw new Error('Bad');
-            const text = await res.text();
-            if (!text || text.trim().length < 10) throw new Error('Empty');
-            processCSV(text);
-        } catch(e) { tryFetch(urls, idx + 1); }
+    let dataLoaded = false;
+
+    async function fetchOne(url) {
+        const res = await fetch(url, { cache: 'no-store' });
+        if (!res.ok) throw new Error('bad');
+        const text = await res.text();
+        if (!text || text.trim().length < 10) throw new Error('empty');
+        return text;
+    }
+
+    async function fetchFastest(urls) {
+        return new Promise((resolve, reject) => {
+            let errors = 0;
+            urls.forEach(url => {
+                fetchOne(url)
+                    .then(text => { if (!dataLoaded) { dataLoaded = true; resolve(text); } })
+                    .catch(() => { errors++; if (errors === urls.length) reject(); });
+            });
+        });
     }
 
     async function init() {
+        // Show cached data instantly if available
         try {
             const cached = sessionStorage.getItem('dt_cache');
             if (cached) {
                 const obj = JSON.parse(cached);
-                if (Date.now() - obj.t < 5 * 60 * 1000) {
+                if (Date.now() - obj.t < 3 * 60 * 1000) {
                     playersData = obj.d;
                     sortedOverall = [...playersData].sort((a,b) => b.totalPoints - a.totalPoints);
                     updateView('Overall');
-                    tryFetch(PROXY_URLS);
-                    return;
                 }
             }
         } catch(e) {}
-        tryFetch(PROXY_URLS);
+
+        // Always fetch fresh data in background (or foreground if no cache)
+        try {
+            dataLoaded = false;
+            const text = await fetchFastest(PROXY_URLS);
+            processCSV(text);
+        } catch(e) {
+            if (!playersData.length) {
+                document.getElementById('main-content').innerHTML = '<div class="empty">Could not load data. Check your connection.</div>';
+            }
+        }
     }
 
     function updateView(mode, el) {
