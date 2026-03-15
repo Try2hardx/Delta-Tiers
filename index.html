@@ -590,6 +590,11 @@
 
   function processCSV(txt) {
     const r = Papa.parse(txt, { header:true, skipEmptyLines:true });
+    // DEBUG: log exact column names so we can see if there are trailing spaces or typos
+    if(r.meta && r.meta.fields) {
+      console.log('[DEBUG] CSV columns:', JSON.stringify(r.meta.fields));
+      console.log('[DEBUG] First row:', JSON.stringify(r.data[0]));
+    }
     // Deduplicate: one entry per IGN, keeping latest non-empty tier per preset
     const playerMap = {};
     r.data.filter(row=>row.IGN&&row.IGN.trim()).forEach(row=>{
