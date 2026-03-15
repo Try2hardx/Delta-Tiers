@@ -685,10 +685,10 @@
       content.querySelectorAll('.player-row').forEach((row,i)=>{ row.style.animationDelay=(i*0.03)+'s'; row.classList.add('row-animate'); });
     } else {
       const tierGroups = [1,2,3,4,5].map(tier=>filtered.filter(p=>{
-        const v=(p[mode]||'').trim().toUpperCase();
-        return v.includes(tier.toString())&&!v.startsWith('R');
+        const v=(p[mode]||'').trim().toUpperCase().replace(/^R/,'');
+        return v.includes(tier.toString());
       }).sort((a,b)=>{
-        const va=a[mode].toUpperCase(), vb=b[mode].toUpperCase();
+        const va=(a[mode]||'').toUpperCase().replace(/^R/,''), vb=(b[mode]||'').toUpperCase().replace(/^R/,'');
         if(va.startsWith('HT')&&vb.startsWith('LT')) return -1;
         if(va.startsWith('LT')&&vb.startsWith('HT')) return 1;
         return a.IGN.localeCompare(b.IGN);
