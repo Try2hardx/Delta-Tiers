@@ -590,7 +590,20 @@
 
   function processCSV(txt) {
     const r = Papa.parse(txt, { header:true, skipEmptyLines:true });
-    playersData = r.data.filter(p=>p.IGN).map(p => {
+    // Deduplicate: one entry per IGN, keeping latest non-empty tier per preset
+    const playerMap = {};
+    r.data.filter(row=>row.IGN&&row.IGN.trim()).forEach(row=>{
+      const ign = row.IGN.trim();
+      if(!playerMap[ign]) playerMap[ign] = {...row, IGN:ign};
+      else {
+        // Merge: overwrite with this row's non-empty values
+        Object.keys(row).forEach(k=>{
+          if(row[k]&&row[k].trim()) playerMap[ign][k] = row[k].trim();
+        });
+        playerMap[ign].IGN = ign;
+      }
+    });
+    playersData = Object.values(playerMap).map(p => {
       let score = 0;
       modeKeys.forEach(m => { if(p[m]){ const c=p[m].trim().toUpperCase().replace(/^R/,''); score+=basePoints[c]||0; }});
       return {...p, totalPoints:score};
