@@ -444,6 +444,56 @@
     .region-cell { display: none; }
     .tier-grid { grid-template-columns: repeat(5, 150px); }
   }
+
+  /* ── DISCORD OVERLAY ── */
+  #discord-overlay {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,0.7); backdrop-filter: blur(8px);
+    display: none; align-items: center; justify-content: center; padding: 20px;
+  }
+  .discord-box {
+    background: var(--bg2); border: 1px solid var(--border2);
+    border-radius: 16px; padding: 28px 24px; width: 100%; max-width: 340px;
+    position: relative;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.7);
+  }
+  .discord-box-close {
+    position: absolute; top: 12px; right: 12px;
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--bg3); border: 1px solid var(--border2);
+    color: var(--muted); cursor: pointer; font-size: 12px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+  }
+  .discord-box-close:hover { color: var(--text); }
+  .discord-box-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px; font-weight: 800; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 20px; display: flex; align-items: center; gap: 8px;
+  }
+  .discord-server-btn {
+    display: flex; align-items: center; gap: 12px;
+    width: 100%; padding: 14px 16px; margin-bottom: 10px;
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 10px; cursor: pointer; text-decoration: none;
+    color: var(--text); transition: all 0.15s ease;
+  }
+  .discord-server-btn:last-child { margin-bottom: 0; }
+  .discord-server-btn:hover { background: var(--bg4); border-color: var(--border2); transform: translateX(3px); }
+  .discord-server-icon {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: #5865F2; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .discord-server-info { text-align: left; }
+  .discord-server-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px; font-weight: 700; letter-spacing: 0.03em;
+    display: block; margin-bottom: 2px;
+  }
+  .discord-server-desc { font-size: 11px; color: var(--muted); }
+  .discord-server-arrow { margin-left: auto; color: var(--muted); font-size: 16px; }
 </style>
 </head>
 <body>
@@ -461,10 +511,10 @@
     <button class="points-btn" onclick="document.getElementById('points-overlay').style.display='flex'">
       <span>Point System</span>
     </button>
-    <a class="discord-btn" href="https://discord.gg/ySygQVgZzm" target="_blank">
-      <svg width="14" height="11" viewBox="0 0 71 55" fill="currentColor"><path d="M60.1 4.9A58.5 58.5 0 0 0 45.5 0a40 40 0 0 0-1.8 3.7 54 54 0 0 0-16.4 0A40 40 0 0 0 25.4 0 58.3 58.3 0 0 0 10.9 4.9C1.6 18.9-1 32.6.3 46c6.2 4.5 12.2 7.3 18.1 9.1a44 44 0 0 0 3.8-6.2 38.3 38.3 0 0 1-6-2.9l1.4-1.1a41.6 41.6 0 0 0 35.7 0c.5.4.9.8 1.4 1.1a38.2 38.2 0 0 1-6 2.9 44 44 0 0 0 3.8 6.2c5.9-1.8 11.9-4.6 18.1-9.1 1.5-15.7-2.5-29.2-10.5-41.1zM23.7 37.7c-3.5 0-6.4-3.2-6.4-7.1s2.8-7.2 6.4-7.2c3.5 0 6.4 3.2 6.3 7.2 0 3.9-2.8 7.1-6.3 7.1zm23.5 0c-3.5 0-6.4-3.2-6.4-7.1s2.8-7.2 6.4-7.2c3.5 0 6.4 3.2 6.4 7.2 0 3.9-2.8 7.1-6.4 7.1z"/></svg>
+    <button class="discord-btn" onclick="document.getElementById('discord-overlay').style.display='flex'">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 127.14 96.36" width="14" height="11" fill="currentColor"><path d="M107.7 8.07A105.15 105.15 0 0 0 81.47 0a72.06 72.06 0 0 0-3.36 6.83 97.68 97.68 0 0 0-29.11 0A72.37 72.37 0 0 0 45.64 0a105.89 105.89 0 0 0-26.25 8.09C2.79 32.65-1.71 56.6.54 80.21a105.73 105.73 0 0 0 32.17 16.15 77.7 77.7 0 0 0 6.89-11.11 68.42 68.42 0 0 1-10.85-5.18c.91-.66 1.8-1.34 2.66-2a75.57 75.57 0 0 0 64.32 0c.87.71 1.76 1.39 2.66 2a68.68 68.68 0 0 1-10.87 5.19 77 77 0 0 0 6.89 11.1 105.25 105.25 0 0 0 32.19-16.14c2.64-27.38-4.51-51.11-18.9-72.15ZM42.45 65.69C36.18 65.69 31 60 31 53s5-12.74 11.43-12.74S54 46 53.89 53s-5.05 12.69-11.44 12.69Zm42.24 0C78.41 65.69 73.25 60 73.25 53s5-12.74 11.44-12.74S96.23 46 96.12 53s-5 12.69-11.43 12.69Z"/></svg>
       <span>Join Discord</span>
-    </a>
+    </button>
   </div>
 </nav>
 
@@ -775,6 +825,47 @@
   document.getElementById('search').addEventListener('input', ()=>updateView(currentMode));
   init();
 </script>
+
+<!-- DISCORD OVERLAY -->
+<div id="discord-overlay" onclick="if(event.target===this)this.style.display='none'">
+  <div class="discord-box" onclick="event.stopPropagation()">
+    <button class="discord-box-close" onclick="document.getElementById('discord-overlay').style.display='none'">✕</button>
+    <div class="discord-box-title">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 127.14 96.36" width="20" height="15" fill="currentColor"><path d="M107.7 8.07A105.15 105.15 0 0 0 81.47 0a72.06 72.06 0 0 0-3.36 6.83 97.68 97.68 0 0 0-29.11 0A72.37 72.37 0 0 0 45.64 0a105.89 105.89 0 0 0-26.25 8.09C2.79 32.65-1.71 56.6.54 80.21a105.73 105.73 0 0 0 32.17 16.15 77.7 77.7 0 0 0 6.89-11.11 68.42 68.42 0 0 1-10.85-5.18c.91-.66 1.8-1.34 2.66-2a75.57 75.57 0 0 0 64.32 0c.87.71 1.76 1.39 2.66 2a68.68 68.68 0 0 1-10.87 5.19 77 77 0 0 0 6.89 11.1 105.25 105.25 0 0 0 32.19-16.14c2.64-27.38-4.51-51.11-18.9-72.15ZM42.45 65.69C36.18 65.69 31 60 31 53s5-12.74 11.43-12.74S54 46 53.89 53s-5.05 12.69-11.44 12.69Zm42.24 0C78.41 65.69 73.25 60 73.25 53s5-12.74 11.44-12.74S96.23 46 96.12 53s-5 12.69-11.43 12.69Z"/></svg>
+      Choose a Server
+    </div>
+    <a class="discord-server-btn" href="https://discord.gg/ySygQVgZzm" target="_blank">
+      <div class="discord-server-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 127.14 96.36" width="22" height="17" fill="white"><path d="M107.7 8.07A105.15 105.15 0 0 0 81.47 0a72.06 72.06 0 0 0-3.36 6.83 97.68 97.68 0 0 0-29.11 0A72.37 72.37 0 0 0 45.64 0a105.89 105.89 0 0 0-26.25 8.09C2.79 32.65-1.71 56.6.54 80.21a105.73 105.73 0 0 0 32.17 16.15 77.7 77.7 0 0 0 6.89-11.11 68.42 68.42 0 0 1-10.85-5.18c.91-.66 1.8-1.34 2.66-2a75.57 75.57 0 0 0 64.32 0c.87.71 1.76 1.39 2.66 2a68.68 68.68 0 0 1-10.87 5.19 77 77 0 0 0 6.89 11.1 105.25 105.25 0 0 0 32.19-16.14c2.64-27.38-4.51-51.11-18.9-72.15ZM42.45 65.69C36.18 65.69 31 60 31 53s5-12.74 11.43-12.74S54 46 53.89 53s-5.05 12.69-11.44 12.69Zm42.24 0C78.41 65.69 73.25 60 73.25 53s5-12.74 11.44-12.74S96.23 46 96.12 53s-5 12.69-11.43 12.69Z"/></svg>
+      </div>
+      <div class="discord-server-info">
+        <span class="discord-server-name">Spear Mace Tier List</span>
+        <span class="discord-server-desc">discord.gg/ySygQVgZzm</span>
+      </div>
+      <span class="discord-server-arrow">›</span>
+    </a>
+    <a class="discord-server-btn" href="https://discord.gg/ycuAuKje3D" target="_blank">
+      <div class="discord-server-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 127.14 96.36" width="22" height="17" fill="white"><path d="M107.7 8.07A105.15 105.15 0 0 0 81.47 0a72.06 72.06 0 0 0-3.36 6.83 97.68 97.68 0 0 0-29.11 0A72.37 72.37 0 0 0 45.64 0a105.89 105.89 0 0 0-26.25 8.09C2.79 32.65-1.71 56.6.54 80.21a105.73 105.73 0 0 0 32.17 16.15 77.7 77.7 0 0 0 6.89-11.11 68.42 68.42 0 0 1-10.85-5.18c.91-.66 1.8-1.34 2.66-2a75.57 75.57 0 0 0 64.32 0c.87.71 1.76 1.39 2.66 2a68.68 68.68 0 0 1-10.87 5.19 77 77 0 0 0 6.89 11.1 105.25 105.25 0 0 0 32.19-16.14c2.64-27.38-4.51-51.11-18.9-72.15ZM42.45 65.69C36.18 65.69 31 60 31 53s5-12.74 11.43-12.74S54 46 53.89 53s-5.05 12.69-11.44 12.69Zm42.24 0C78.41 65.69 73.25 60 73.25 53s5-12.74 11.44-12.74S96.23 46 96.12 53s-5 12.69-11.43 12.69Z"/></svg>
+      </div>
+      <div class="discord-server-info">
+        <span class="discord-server-name">Hole Fights Tier List</span>
+        <span class="discord-server-desc">discord.gg/ycuAuKje3D</span>
+      </div>
+      <span class="discord-server-arrow">›</span>
+    </a>
+    <a class="discord-server-btn" href="https://discord.gg/kNcN5TcApb" target="_blank">
+      <div class="discord-server-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 127.14 96.36" width="22" height="17" fill="white"><path d="M107.7 8.07A105.15 105.15 0 0 0 81.47 0a72.06 72.06 0 0 0-3.36 6.83 97.68 97.68 0 0 0-29.11 0A72.37 72.37 0 0 0 45.64 0a105.89 105.89 0 0 0-26.25 8.09C2.79 32.65-1.71 56.6.54 80.21a105.73 105.73 0 0 0 32.17 16.15 77.7 77.7 0 0 0 6.89-11.11 68.42 68.42 0 0 1-10.85-5.18c.91-.66 1.8-1.34 2.66-2a75.57 75.57 0 0 0 64.32 0c.87.71 1.76 1.39 2.66 2a68.68 68.68 0 0 1-10.87 5.19 77 77 0 0 0 6.89 11.1 105.25 105.25 0 0 0 32.19-16.14c2.64-27.38-4.51-51.11-18.9-72.15ZM42.45 65.69C36.18 65.69 31 60 31 53s5-12.74 11.43-12.74S54 46 53.89 53s-5.05 12.69-11.44 12.69Zm42.24 0C78.41 65.69 73.25 60 73.25 53s5-12.74 11.44-12.74S96.23 46 96.12 53s-5 12.69-11.43 12.69Z"/></svg>
+      </div>
+      <div class="discord-server-info">
+        <span class="discord-server-name">Mace-Pot Tier List</span>
+        <span class="discord-server-desc">discord.gg/kNcN5TcApb</span>
+      </div>
+      <span class="discord-server-arrow">›</span>
+    </a>
+  </div>
+</div>
 
 <!-- POINTS OVERLAY -->
 <div id="points-overlay" onclick="if(event.target===this)this.style.display='none'">
