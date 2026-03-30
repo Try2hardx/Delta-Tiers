@@ -1,0 +1,21 @@
+{
+  "name": "Delta Tiers",
+  "short_name": "Delta Tiers",
+  "description": "Official Minecraft 1.21+ PvP tier list — Spear Mace, Hole Fight, and Breach SMP rankings.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#060d1a",
+  "theme_color": "#0a1222",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
